@@ -8,7 +8,7 @@ Clon del clásico arcade **Asteroids** implementado en canvas HTML5 puro, sin de
 
 ## Descripción del juego
 
-Nave espacial en un campo de asteroides con envolvimiento de bordes (el espacio es toroidal). Destruye asteroides para sumar puntos: los grandes se parten en medianos, los medianos en pequeños. Incluye power-ups especiales y tipos de asteroides únicos como la estrella fugaz...
+Nave espacial en un campo de asteroides con envolvimiento de bordes (el espacio es toroidal). Destruye asteroides para sumar puntos: los grandes se parten en medianos, los medianos en pequeños. Al destruir un asteroide hay un 1% de probabilidad de que suelte una **Bomba** ("B"): tócala con la nave para destruir todos los asteroides en pantalla. Incluye power-ups especiales y tipos de asteroides únicos como la estrella fugaz...
 
 ## Tecnologías
 

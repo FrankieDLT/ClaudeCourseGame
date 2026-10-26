@@ -23,4 +23,5 @@ All game logic lives in `game.js` (loaded by `index.html` onto a fixed 800x600 c
 
 ## Notes
 
-- The README mentions power-ups and "estrella fugaz" asteroids; these are not implemented in `game.js`.
+- The only power-up implemented is the Bomb (`PowerUp` class, "B"): 1% drop chance (`BOMB_DROP_CHANCE`) from any destroyed asteroid; touching it with the ship calls `detonateBomb()`, which clears all asteroids (points awarded, no splitting). Held in `powerUps`, which is reset in `initGame()`/`nextLevel()`.
+- The README also mentions "estrella fugaz" asteroids; these are not implemented in `game.js`.
