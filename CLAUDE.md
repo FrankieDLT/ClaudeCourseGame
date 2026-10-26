@@ -23,5 +23,6 @@ All game logic lives in `game.js` (loaded by `index.html` onto a fixed 800x600 c
 
 ## Notes
 
-- The only power-up implemented is the Bomb (`PowerUp` class, "B"): 1% drop chance (`BOMB_DROP_CHANCE`) from any destroyed asteroid; touching it with the ship calls `detonateBomb()`, which clears all asteroids (points awarded, no splitting). Held in `powerUps`, which is reset in `initGame()`/`nextLevel()`.
+- Power-ups share one `PowerUp` class, typed via the `POWERUP_TYPES` table: Bomb "B", Hyper "H", Shield "SH", SlowMo "SM", Triple "3". `destroyAsteroid()` is the single place an asteroid dies from bullets/shield; it calls `maybeDropPowerUp()` (10% `POWERUP_CHANCE`, weighted pick by `weight`). Pickup goes through `applyPowerUp(type)`. Held in `powerUps`, reset in `initGame()`/`nextLevel()`.
+- Effects: Bomb clears all asteroids (`detonateBomb()`); Hyper sets `ship.hyper` (2x speed/turn, faster rainbow fire, immune); Shield sets `ship.shield` (absorbs one asteroid hit); SlowMo sets the global `slowTimer` (asteroids move at `SLOW_FACTOR`); Triple sets the global `tripleTimer` (3 bullets 30° apart; globals survive `ship.reset()`).
 - The README also mentions "estrella fugaz" asteroids; these are not implemented in `game.js`.
