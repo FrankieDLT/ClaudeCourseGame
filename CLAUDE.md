@@ -15,7 +15,7 @@ Open `index.html` directly in a browser, or serve with `npx serve .` (http://loc
 All game logic lives in `game.js` (loaded by `index.html` onto a fixed 800x600 canvas; `W`/`H` constants must match the canvas size). Structure, top to bottom:
 
 - **Input**: `keys` (held state) and `justPressed` (edge-triggered). Read edge-triggered input via `pressed(code)`, which consumes the flag. Used for Space restart; shooting reads held `keys['Space']` and is rate-limited by `ship.shootCooldown`.
-- **Entities** (`Bullet`, `Asteroid`, `Ship`, `Particle`): each has `update(dt)`, `draw()`, and a `dead` flag. Dead entities are removed by array `filter` in `update()`, not inside the entity. Positions wrap toroidally via `wrap()` (except particles, which don't wrap).
+- **Entities** (`Bullet`, `Asteroid`, `Ship`, `Particle`, `PowerUp`): each has `update(dt)`, `draw()`, and a `dead` flag. Dead entities are removed by array `filter` in `update()`, not inside the entity. Positions wrap toroidally via `wrap()` (except particles, which don't wrap).
 - **Asteroid sizes** are 1-3 and index the parallel `RADII` / `SPEEDS` / `POINTS` arrays (index 0 unused). `split()` spawns two of `size - 1`.
 - **Game state**: module-level globals (`ship`, `bullets`, `asteroids`, `particles`, `score`, `lives`, `level`) plus `state` in `'playing' | 'dead' | 'gameover'`. `'dead'` is a 2s respawn timer during which asteroids and particles keep updating. `initGame()` resets everything; `nextLevel()` spawns `3 + level` asteroids when none remain.
 - **Loop**: `requestAnimationFrame` with `dt` in seconds, clamped to 0.05 to avoid big jumps after tab switches. All motion is dt-scaled (except the ship's `DRAG`, applied per frame).
@@ -23,4 +23,5 @@ All game logic lives in `game.js` (loaded by `index.html` onto a fixed 800x600 c
 
 ## Notes
 
-- The README mentions power-ups and "estrella fugaz" asteroids; these are not implemented in `game.js`.
+- Only one power-up is implemented: the triple shot (`PowerUp` class, drawn as a cyan "3"). It drops with `POWERUP_CHANCE` when an asteroid is destroyed; picking it up sets the global `tripleTimer` (10s), during which `Ship.tryShoot()` fires 3 bullets 30° apart. `tripleTimer` is a global (not on `Ship`) so it survives `ship.reset()` in `nextLevel()`; `killShip()` clears it.
+- The README mentions other power-ups and "estrella fugaz" asteroids; these are not implemented in `game.js`.
